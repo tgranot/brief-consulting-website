@@ -1,4 +1,2 @@
 Contact: mailto:tal@brief-consulting.com
-Expires: 2027-01-01T00:00:00.000Z
-Preferred-Languages: en
-Canonical: https://www.brief-consulting.com/.well-known/security.txt
+Expires: 2027-06-01T00:00:00.000Z

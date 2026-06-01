@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.brief-consulting.com/sitemap.xml
+Sitemap: https://talgranot.com/sitemap.xml

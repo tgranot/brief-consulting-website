@@ -1,66 +1,37 @@
-'use strict';
-
 /* ============================================================
-   Brief Consulting — main.js
-   Handles: navbar scroll behaviour + fade-in on scroll.
-   No inline event handlers. No eval. No external dependencies.
+   Tal Granot — main.js
    ============================================================ */
 
-/* ===========================
-   1. Navbar: add shadow when page is scrolled
-   =========================== */
-(function initNav() {
+(function () {
+  'use strict';
+
+  // --- Navbar scroll effect ---
   var nav = document.getElementById('nav');
-  if (!nav) { return; }
-
-  function onScroll() {
-    if (window.scrollY > 24) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
+  if (nav) {
+    window.addEventListener('scroll', function () {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  /* Run once immediately in case the page loads already scrolled */
-  onScroll();
-}());
-
-/* ===========================
-   2. Fade-in sections on scroll
-      Uses IntersectionObserver for performance.
-      Falls back gracefully on old browsers.
-   =========================== */
-(function initFadeIn() {
-  var elements = document.querySelectorAll('.fade-in');
-  if (!elements.length) { return; }
-
-  /* ---- Fallback for browsers without IntersectionObserver ---- */
-  if (typeof IntersectionObserver === 'undefined') {
-    elements.forEach(function (el) {
-      el.classList.add('visible');
-    });
-    return;
-  }
-
-  /* ---- Normal path ---- */
-  var observer = new IntersectionObserver(
-    function (entries) {
+  // --- Scroll reveal for .reveal elements ---
+  var reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target); /* only animate once */
+          observer.unobserve(entry.target);
         }
       });
-    },
-    {
-      threshold: 0.12,           /* trigger when 12 % of element is visible */
-      rootMargin: '0px 0px -32px 0px' /* slight offset from bottom edge */
-    }
-  );
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-  elements.forEach(function (el) {
-    observer.observe(el);
-  });
-}());
+    reveals.forEach(function (el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: show everything if IntersectionObserver not supported
+    reveals.forEach(function (el) {
+      el.classList.add('visible');
+    });
+  }
+})();
