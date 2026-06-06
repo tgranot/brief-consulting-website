@@ -1,6 +1,0 @@
-# Redirect secondary domain → primary
-https://brief-consulting.com/* https://talgranot.com/:splat 301
-https://www.brief-consulting.com/* https://talgranot.com/:splat 301
-
-# Normalize www → apex for primary domain
-https://www.talgranot.com/* https://talgranot.com/:splat 301
